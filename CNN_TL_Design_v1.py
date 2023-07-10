@@ -41,10 +41,9 @@ train_virus, test_virus = train_test_split(virus_dataset, test_size=0.075, rando
 
 # Split the training sets into training and validation sets for each class
 # TODO: check why we need to split the validation set from the training set in advance instead of using validation split
-train_normal, val_normal= train_test_split(train_normal, test_size=0.15, random_state=42, shuffle=True)
-train_bacterial, val_bacterial = train_test_split(train_bacterial, test_size=0.05, random_state=42, shuffle=True)
-train_virus, val_virus = train_test_split(train_virus, test_size=0.075, random_state=42, shuffle=True)
-
+train_normal, val_normal= train_test_split(train_normal, test_size=0.038, random_state=42, shuffle=True)
+train_bacterial, val_bacterial = train_test_split(train_bacterial, test_size=0.0095, random_state=42, shuffle=True)
+train_virus, val_virus = train_test_split(train_virus, test_size=0.019, random_state=42, shuffle=True)
 
 train = [x for x in train_normal]
 train.extend([x for x in train_bacterial])
