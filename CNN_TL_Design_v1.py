@@ -42,7 +42,7 @@ def split_data(dataSet, testSize, valSize):
 
 train_normal, test_normal, val_normal = split_data(normal_dataset, 0.15, 0.038)
 train_bacterial, test_bacterial, val_bacterial = split_data(bacterial_dataset, 0.05, 0.0095)
-train_virus, test_virus, val_virus = split_data(virus_dataset, 0.019, 0.019)
+train_virus, test_virus, val_virus = split_data(virus_dataset, 0.075, 0.019)
 
 
 # train_normal, test_normal= train_test_split(normal_dataset, test_size=0.15, random_state=42, shuffle=True)
