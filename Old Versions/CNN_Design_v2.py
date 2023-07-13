@@ -115,20 +115,26 @@ datagen.fit(X_train)
 # --------- Building CNN network ----------#
 # num_of_test = 1
 # for i in range(num_of_test):
+kernelSize = (3,3)
 model = Sequential()
-model.add(Conv2D(filters=32, kernel_size=(3, 3), padding='same',
+model.add(Conv2D(filters=32, kernel_size=kernelSize, padding='same',
                 activation='relu', input_shape=(IMG_SIZE, IMG_SIZE, 1)))
 model.add(MaxPool2D(pool_size=(2,2),strides=(2,2)))
 model.add(BatchNormalization())
 model.add(Dropout(0.2))
 
-model.add(Conv2D(filters=64, kernel_size=(3,3), padding="same", activation="relu"))
-model.add(Conv2D(filters=64, kernel_size=(3,3), padding="same", activation="relu"))
+model.add(Conv2D(filters=64, kernel_size=kernelSize, padding="same", activation="relu"))
+model.add(Conv2D(filters=64, kernel_size=kernelSize, padding="same", activation="relu"))
 model.add(MaxPool2D(pool_size=(2,2),strides=(2,2)))
 model.add(BatchNormalization())
 
-model.add(Conv2D(filters=128, kernel_size=(3,3), padding="same", activation="relu"))
-model.add(Conv2D(filters=128, kernel_size=(3,3), padding="same", activation="relu"))
+model.add(Conv2D(filters=128, kernel_size=kernelSize, padding="same", activation="relu"))
+model.add(Conv2D(filters=128, kernel_size=kernelSize, padding="same", activation="relu"))
+model.add(MaxPool2D(pool_size=(2,2),strides=(2,2)))
+model.add(BatchNormalization())
+
+model.add(Conv2D(filters=256, kernel_size=kernelSize, padding="same", activation="relu"))
+model.add(Conv2D(filters=256, kernel_size=kernelSize, padding="same", activation="relu"))
 model.add(MaxPool2D(pool_size=(2,2),strides=(2,2)))
 model.add(BatchNormalization())
 model.add(Flatten())
@@ -138,18 +144,17 @@ model.add(Dense(128, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(units=1, activation='sigmoid'))
 
-
-model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.0001),
+model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.001),
               loss='binary_crossentropy', metrics=['accuracy'])
 model.summary()
 
 # binary_crossentropy is chosen because we have a binary ouput, either sick or not.
 
 learning_rate_reduction = ReduceLROnPlateau(
-    monitor='val_loss', patience=2, verbose=1, factor=0.2, min_lr=0.00000001)
+    monitor='val_loss', patience=4, verbose=1, factor=0.2, min_lr=0.00000001)
 # min_delta: threshold for measuring the new optimum, to only focus on
 #   significant changes.
-early_stop = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3,restore_best_weights=True)
+early_stop = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=9,restore_best_weights=True)
 # early_stop = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3)
 
 # history = model.fit(X_train, y_train, batch_size=16,
